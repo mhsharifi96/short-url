@@ -23,3 +23,19 @@ class Links(models.Model):
         verbose_name_plural = "Links"
 
 
+
+class Links_log(models.Model):
+    src_ip = models.CharField(max_length=255,null=True)
+    dst_ip = models.CharField(max_length=255,null=True)
+    link = models.ForeignKey(Links, on_delete=models.CASCADE)
+    details = models.CharField(max_length=500,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'links_log'
+        verbose_name_plural = "Links log"
+
+
+
+# UIBvzAgDWy

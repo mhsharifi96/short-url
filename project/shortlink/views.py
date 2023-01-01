@@ -21,6 +21,8 @@ class LinksViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def redirect_link(self, request, short_link=None):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR',None)
+        print(x_forwarded_for)
         # cache_main_url = cache.get(short_link)
         # if cache_main_url:
             
