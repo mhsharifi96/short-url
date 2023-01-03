@@ -1,12 +1,12 @@
 """https://fastapi.tiangolo.com/advanced/sql-databases-peewee/"""
 from typing import Union
 from peewee import *
-from fastapi import FastAPI,Depends, HTTPException
+from fastapi import FastAPI,Depends, HTTPException, BackgroundTasks
 from app.models import Links
 from app.schemas import LinkSchemas
 from app.database import db_state_default,db
 from app.schemas import LinkSchemas
-from app.crud import get_link
+from app.crud import get_link, update_count_view
 
 sleep_time = 10
 
@@ -23,17 +23,26 @@ def get_db(db_state=Depends(reset_db_state)):
     finally:
         if not db.is_closed():
             db.close()
-# response_model=LinkSchemas
-@app.get("/{short_link}",  dependencies=[Depends(get_db)])
-def read_root(short_link: str):
-    # print('hi this is read root def')
+
+def link_log(short_link:str):
+    update_count_view(short_link)
+    
+
+# response_model=LinkSchemas,dependencies=[Depends(get_db)]
+@app.get("/{short_link}")
+def read_root(short_link: str,background_tasks: BackgroundTasks):
+    
     # link = await get_link(short_link)
     try:
         # link = await db_async.get(Links,short_link =short_link)
         # return link
         link =  get_link(short_link)
-        return {'main_link':link.main_link}
-    except :
+        background_tasks.add_task(link_log, short_link)
+        return {'main_link':link[2]}
+        # return {'main_link':link.main_link}
+
+    except Exception as e :
+        print(str(e))
         raise HTTPException(status_code=404, detail="short link not found")
 
 

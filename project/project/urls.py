@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from shortlink.views import LinksViewSet
+
+redirect_link = LinksViewSet.as_view({'get': 'redirect_link'})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('shortlink.urls'))
+    path('api/',include('shortlink.urls')),
+    path('<str:short_link>/', redirect_link, name='redirect-link-root'),
 ]
