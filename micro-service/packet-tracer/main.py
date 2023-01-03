@@ -11,7 +11,6 @@ for packet in capture.sniff_continuously():
     dst_ip = str(packet['ip'].dst )
     src_ip = str(packet['ip'].src )
 
-
     if dst_ip in ip_list or src_ip in ip_list:
         
         if 'http' in packet : 
