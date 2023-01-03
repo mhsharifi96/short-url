@@ -2,7 +2,7 @@ import requests
 import json
 
 def create_packet_log(packet):
-    print('def create packet log')
+    print('create packet log')
     url = "http://127.0.0.1:8000/packet/"
 
     payload = json.dumps(packet)
