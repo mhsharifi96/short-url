@@ -21,14 +21,9 @@ for packet in capture.sniff_continuously():
                 if int(packet['http'].response_code) == success_code:
                     
                     print('---------------- response ----------------')
-                    
-                    # print('dst ',packet['eth'].dst,packet['eth'].dst,packet['eth'].dst_ig, packet['eth'].dst_lg\
-                    #     , packet['eth'].dst_oui, packet['eth'].dst_oui_resolved, packet['eth'].dst_resolved)
-                    # print(packet['http'].response_for_uri)
-                    # print(packet['http'].time)
+                
                     print(packet['http'].response_code)
-                    # print(str(packet['http'].date))
-                    # print(packet['http'].set_cookie)
+                    
                     print('---------------- End response ----------------')
                     
                     create_packet_log({

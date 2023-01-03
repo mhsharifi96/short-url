@@ -29,13 +29,9 @@ def link_log(short_link:str):
     
 
 # response_model=LinkSchemas,dependencies=[Depends(get_db)]
-@app.get("/{short_link}")
+@app.get("/{short_link}/")
 def read_root(short_link: str,background_tasks: BackgroundTasks):
-    
-    # link = await get_link(short_link)
     try:
-        # link = await db_async.get(Links,short_link =short_link)
-        # return link
         link =  get_link(short_link)
         background_tasks.add_task(link_log, short_link)
         return {'main_link':link[2]}
@@ -46,6 +42,3 @@ def read_root(short_link: str,background_tasks: BackgroundTasks):
         raise HTTPException(status_code=404, detail="short link not found")
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):    
-    return {"item_id": item_id, "q": q}
