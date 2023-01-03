@@ -8,7 +8,7 @@ router.register(r'link', LinksViewSet, basename='link')
 router.register(r'packet', packetsLogViewSet, basename='packet')
 router.register(r'link-log', LinksLogViewSet, basename='link-log')
 
-# cusom link
+# custom link
 redirect_link = LinksViewSet.as_view({'get': 'redirect_link'})
 
 
